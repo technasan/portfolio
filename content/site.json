@@ -1,0 +1,39 @@
+{
+  "languages": [
+    { "code": "ru", "label": "RU" },
+    { "code": "en", "label": "EN" }
+  ],
+  "defaultLanguage": "ru",
+
+  "projectsDir": "projects",
+  "projects": [
+    "theflow",
+    "the750",
+    "blus",
+    "madrekunst",
+    "thestick",
+    "desu-clothing"
+  ],
+
+  "person": {
+    "name": { "ru": "Наталья Кизева", "en": "Natalia Kizeva" },
+    "handle": "@technasan"
+  },
+
+  "meta": {
+    "title": { "ru": "Наталья Кизева — портфолио", "en": "Natalia Kizeva — Portfolio" }
+  },
+
+  "contacts": {
+    "items": [
+      { "label": "Email", "text": "technasan@gmail.com", "href": "mailto:technasan@gmail.com" },
+      { "label": "Telegram", "text": "@technasan", "href": "https://t.me/technasan" },
+      { "label": "GitHub", "text": "github.com/technasan", "href": "https://github.com/technasan" }
+    ]
+  },
+
+  "ui": {
+    "projects": { "ru": "Проекты", "en": "Projects" },
+    "loadError": { "ru": "Не удалось загрузить проекты.", "en": "Couldn't load projects." }
+  }
+}

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio</title>
+</head>
+<body>
+  <h1 id="name"></h1>
+  <h2 id="projects-title"></h2>
+  <ul id="projects"></ul>
+
+  <script>
+    // Временная страница: выводит названия проектов списком.
+    // Контент — content/site.json, проекты — projects/<папка>/project.json.
+    // Язык: ?lang=en в адресе, иначе defaultLanguage из site.json.
+    (async () => {
+      const site = await fetch('content/site.json', { cache: 'no-cache' }).then((r) => r.json());
+      const codes = site.languages.map((l) => l.code);
+      const fromUrl = new URLSearchParams(location.search).get('lang');
+      const lang = codes.includes(fromUrl) ? fromUrl : site.defaultLanguage;
+
+      // строка — одинакова для всех языков; объект { ru, en } — по языкам
+      const isLocalized = (v) => v && typeof v === 'object' && !Array.isArray(v) &&
+        Object.keys(v).length > 0 && Object.keys(v).every((k) => codes.includes(k));
+      const t = (v) => (isLocalized(v) ? v[lang] ?? v[site.defaultLanguage] ?? Object.values(v)[0] : v);
+
+      document.documentElement.lang = lang;
+      document.title = t(site.meta.title);
+      document.getElementById('name').textContent = t(site.person.name);
+      document.getElementById('projects-title').textContent = t(site.ui.projects);
+
+      const list = document.getElementById('projects');
+      try {
+        const dir = site.projectsDir || 'projects';
+        const projects = await Promise.all(site.projects.map((id) =>
+          fetch(`${dir}/${id}/project.json`, { cache: 'no-cache' }).then((r) => r.json())));
+        projects.filter((p) => !p.hidden).forEach((p) => {
+          const li = document.createElement('li');
+          li.textContent = t(p.brand);
+          list.append(li);
+        });
+      } catch (e) {
+        console.error(e);
+        list.textContent = t(site.ui.loadError);
+      }
+    })();
+  </script>
+</body>
+</html>
