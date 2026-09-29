@@ -4,8 +4,45 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Portfolio</title>
+  <style>
+    /* Заглушка «under construction»: закрывает страницу, по клику на картинку скрывается */
+    #construction {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: #0b1d3a;
+    }
+    #construction[hidden] { display: none; }
+    #construction button {
+      padding: 0;
+      border: 0;
+      background: none;
+      cursor: pointer;
+    }
+    #construction img {
+      display: block;
+      width: min(480px, 80vw, 80vh);
+      height: auto;
+      border-radius: 16px;
+    }
+  </style>
 </head>
 <body>
+  <div id="construction">
+    <button type="button" aria-label="Under construction. Открыть сайт">
+      <img src="img/capy-pic.jpeg" alt="Under construction" width="1024" height="1024">
+    </button>
+  </div>
+  <script>
+    document.querySelector('#construction button').addEventListener('click', () => {
+      document.getElementById('construction').hidden = true;
+    });
+  </script>
+
   <h1 id="name"></h1>
   <h2 id="projects-title"></h2>
   <ul id="projects"></ul>
